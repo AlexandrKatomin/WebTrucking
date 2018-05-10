@@ -23,6 +23,8 @@ entity Company{
     name String
 }
 
+//договор-заявка
+//нужно еще хранить в формате pdf
 entity Contract {
 	contractID Int,
     num String,
@@ -39,7 +41,7 @@ entity Driver{
 }
 
 relationship OneToOne{
- Company To Adress
+ Company to Address
 }
 
 relationship OneToMany {
@@ -82,7 +84,7 @@ entity TypeOfTrip{
     //"обратка" "прямой"
     //нужно для определения целесообразности
  }
- entity Adress{
+ entity Address{
  	country String,
     region String,//область
   	city String,
@@ -99,5 +101,56 @@ relationship ManyToOne {
     Trip to Contract
     }
  relationship OneToOne {
-	PointOfMap to Coordinates   
+	PointOfMap to Coordinates,
+    PointOfMap to Address
+    }
+    
+    entity Receipt{
+    //поступление денег
+    receipt Int  
+    }
+    
+  entity TypeOfReceipt{
+    typeOfReceipt Int
+    }
+    
+  entity Expense{
+  expenseID Int,
+  summ Decimal,
+  date DateTime,
+  description String
+  }
+  
+  entity Wallet{
+  	walletID Int,
+  	summ Decimal
+   //тут много вопросов
+   //хочу сделать отсдеживание движения денег
+   //причем как по отдельным кошелькам, так и всех вместе
+  }
+  
+  entity TypeOfWallet{
+  	typeOfWallet Int,
+  	number String
+  //наличные, карты, р/с
+  }
+  
+  entity TypeOfExpence{
+  	typeOfExpence Int
+    //топливо,зп,
+    //оплата кредита, ТО
+    //ремонт
+  }
+  
+  
+   relationship ManyToOne {
+	Expense to Wallet,
+    Receipt to Wallet,
+    Receipt to Contract    
+    }
+    
+    relationship OneToMany {
+	Wallet to TypeOfWallet,
+    Expense to TypeOfExpence,
+    Receipt to TypeOfReceipt    
     }
