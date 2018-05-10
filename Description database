@@ -20,8 +20,7 @@ entity Cargo{
 
 entity Company{
 	companyID Int,
-    name String,
-    adress String
+    name String
 }
 
 entity Contract {
@@ -39,12 +38,66 @@ entity Driver{
     birthday Date
 }
 
-
 relationship OneToOne{
-  Contract to Company
+ Company To Adress
 }
+
 relationship OneToMany {
 	Contract to Car,
     Contract to Driver,
-    Contract to Cargo
+    Contract to Cargo,
+    Contract to Company
+    }
+//-----------------------------------//
+
+entity Trip{
+	tripID Int,
+    number Int,//номер рейса в кругорейсе
+    //нужно подумать
+    dateB DateTime,
+    dateE DateTime,
+    distance Double,//пройдено км
+    fuel Double,//расход топлива
+    source[] String,//точка загрузки 
+    destination[] String //точка загрузки  
+}
+entity Coordinates{
+	longitude Decimal,//долгота
+    latitude Decimal//широта
+}
+entity PointOfMap{
+	localityName String,//название нас пункта
+    address String,// сделать отдельной сущностью    
+}
+entity CircleTrip{
+	circleTripID Int,
+    number String,
+    countDays Int,
+    distance Double,//пройдено км
+    fuel Double//расход топлива    
+    }
+entity TypeOfTrip{
+	typeOfTrip Int, 
+    name String
+    //"обратка" "прямой"
+    //нужно для определения целесообразности
+ }
+ entity Adress{
+ 	country String,
+    region String,//область
+  	city String,
+    street String,
+    hause String,
+    postcode String    
+ }
+ relationship OneToMany {
+	Trip to PointOfMap   
+    }
+relationship ManyToOne {
+	Trip to CircleTrip,
+    Trip to TypeOfTrip
+    Trip to Contract
+    }
+ relationship OneToOne {
+	PointOfMap to Coordinates   
     }
