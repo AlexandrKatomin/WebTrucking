@@ -107,7 +107,10 @@ relationship ManyToOne {
     
     entity Receipt{
     //поступление денег
-    receipt Int  
+    receiptID Int,
+    summ Decimal,
+    date Datetime,
+    description String
     }
     
   entity TypeOfReceipt{
@@ -140,8 +143,7 @@ relationship ManyToOne {
     //топливо,зп,
     //оплата кредита, ТО
     //ремонт
-  }
-  
+  } 
   
    relationship ManyToOne {
 	Expense to Wallet,
